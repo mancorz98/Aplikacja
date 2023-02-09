@@ -8,9 +8,6 @@ from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.filechooser import FileChooser
-import tkinter as tk
-from tkinter import filedialog
-import easygui
 import kivy
 from kivy.lang import Builder
 from kivy.app import App

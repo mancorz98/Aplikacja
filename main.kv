@@ -4,15 +4,16 @@
     id: layout
     width: 100
     pos_hint:  {"center_x": 0.5, "center_y":0.5}
+    size_hint: (0.8,0.9)
     FloatLayout:
         id: programLayout
-        size_hint: (0.8,0.9)
         pos_hint:  {"center_x": 0.5, "center_y":0.5}
+
         Image:
             id: logoAgh
-            source: "agh_znak_negatyw_bez_nazwy.jpg"
+            source: "logo_AGH_negatyw.png"
             pos_hint: {"x": 0, "top": 1}
-            size_hint: (0.4, 0.2)
+            size_hint: (0.1, 0.2)
 
         Label:
             id: greetings
@@ -51,22 +52,44 @@
             step: 0.1
             orientation: 'horizontal'
             pos_hint: {"x": 0, "center_y":0.4}
-            size_hint: (0.3,0.01)
+            size_hint: 0.3, None
+            background_width: 32
         Label:
             id: AmpOnLabel
-            text: f"AmpOn={round(AmpOn.value,1)}"
-            pos_hint: {"x": AmpOn.x/programLayout.width, "y":AmpOn.top/programLayout.height+0.02}
-            size_hint: (0,0.0)
-
-
-
-
-
-
-
+            text: f"Amplituda impulsu: {round(AmpOn.value,1)} V"
+            x: AmpOn.x
+            y: AmpOn.top
+            text_size: self.width,None
+            size_hint: 1, 0
+            height: self.texture_size[1]
+        Slider:
+            id: dtOn
+            min: 0
+            max: 500
+            step: 1
+            orientation: 'horizontal'
+            pos_hint: {"right": 1, "center_y":0.4}
+            size_hint: 0.3, None
+            background_width: 32
+        Label:
+            id: dtOnLabel;
+            text: f"Szerokość impulsu: {round(dtOn.value,1)} ms"
+            x: dtOn.x
+            y: dtOn.top
+            text_size: self.width,None
+            size_hint: 1, 0
+            height: self.texture_size[1]
+        Button:
+            id: startMeasure
+            text: "Rozpocznij pomiar"
+            size_hint: (0.3,0.05)
+            bold: True
+            background_color: 'white'
+            pos_hint: {"center_x": 0.5, "center_y":0.2}
+            on_press: root.startMeasure()
 
 <FileChoosePopup>:
-    title: "Choose a .CSV File"
+    title: "Wybierz folder zapisu pliku"
     size_hint: .9, .9
     auto_dismiss: False
 
