@@ -14,11 +14,12 @@ from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.lang import Builder
-
+import os
 
 
 class FileChoosePopup(Popup):
-    load = ObjectProperty()
+    load = ObjectProperty(None)
+
 
 
 
@@ -38,6 +39,23 @@ class MainPanel(FloatLayout):
         # check for non-empty list i.e. file selected
         if self.file_path:
             self.ids.FilePath.text = self.file_path
+
+    def startMeasure(self):
+        self.directory = self.ids.FilePath.text
+        self.Amp_On = round(self.ids.AmpOn.value,1)
+        self.dt_Ron = self.ids.dtOn.value/1000
+        self.make_file()
+
+    def make_file(self):
+        file = f"Programowanie_Ron_wyniki_AmpOn={self.Amp_On}_dtOn={self.dt_Ron}.csv"
+        string = "Timestamp,No. pulses, No. Test,R,Succes,dt_Ron,Amp_RonR,q,E_memristor,State\n"
+        self.file = os.path.join(self.directory, file)
+        
+        with open(self.file, "w") as f:
+            f.write(string)
+
+
+
 
 Builder.load_file('main.kv')
 
