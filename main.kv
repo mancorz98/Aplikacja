@@ -4,7 +4,8 @@
     id: layout
     width: 100
     pos_hint:  {"center_x": 0.5, "center_y":0.5}
-    size_hint: (0.8,0.9)
+    size_hint: (0.9,0.9)
+
     FloatLayout:
         id: programLayout
         pos_hint:  {"center_x": 0.5, "center_y":0.5}
@@ -17,9 +18,12 @@
 
         Label:
             id: greetings
-            text: "Program do programowania memrystora"
+            text: '[font_family=sans-serif]Programowanie memrystora[/font]'
+            markup: True
+            bold: True
             pos_hint: {"center_x": 0.5, "top": 1}
             size_hint: (0.2, 0.2)
+            font_size: 36
 
         Image:
             id: LogoSamogloski
@@ -29,15 +33,20 @@
         Label:
             id: FilePath
             text:'Wybrana ścieżka'
-            multiline: False
-            size_hint: (0.5, 0.05)
+            multiline: True
             pos_hint: {"right": 1, "center_y":0.6}
             focus: True
             font_name: 'Arial'
+            text_size: self.width, None
+            size_hint: 0.5, 0
+            halign: 'center'
+            height: self.texture_size[1]
+
         Button:
             id: SetFilePath
             text: "Wybierz folder zapisu"
-            size_hint: (0.3,0.05)
+            size_hint: 0.4, 0.05
+            halign: 'center'
             bold: True
             background_color: 'white'
             pos_hint: {"x": 0, "center_y":0.6}
@@ -66,7 +75,7 @@
             id: dtOn
             min: 0
             max: 500
-            step: 1
+            step: 5
             orientation: 'horizontal'
             pos_hint: {"right": 1, "center_y":0.4}
             size_hint: 0.3, None
@@ -86,7 +95,7 @@
             bold: True
             background_color: 'white'
             pos_hint: {"center_x": 0.5, "center_y":0.2}
-            on_press: root.startMeasure
+            on_press: root.startMeasure()
 
 <FileChoosePopup>:
     title: "Wybierz folder zapisu pliku"

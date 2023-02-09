@@ -15,7 +15,7 @@ from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.lang import Builder
 import os
-
+from KB_functions import *
 
 class FileChoosePopup(Popup):
     load = ObjectProperty(None)
@@ -39,13 +39,22 @@ class MainPanel(FloatLayout):
         # check for non-empty list i.e. file selected
         if self.file_path:
             self.ids.FilePath.text = self.file_path
+            self.ids.FilePath.color = "white"
 
     def startMeasure(self):
+        print("Hello World")
         self.directory = self.ids.FilePath.text
-        self.Amp_On = round(self.ids.AmpOn.value)
-        self.dt_Ron = self.ids.dtOn.value/1000
+        self.Amp_On = round(self.ids.AmpOn.value,1)
+        self.dt_Ron = self.ids.dtOn.value/1000.
         print(self.Amp_On)
-        self.make_file()
+        if os.path.isdir(self.directory):
+            self.make_file()
+            print(check_state(4.8))
+        else:
+            self.ids.FilePath.color = "red"
+            self.ids.FilePath.text = "Nie wybrano ścieżki"
+
+
 
     def make_file(self):
         file = f"Programowanie_Ron_wyniki_AmpOn={self.Amp_On}_dtOn={self.dt_Ron}.csv"
