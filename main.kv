@@ -1,0 +1,94 @@
+#:kivy 2.1.0
+<MainPanel>
+    #pos_hint: {"center_x": 0.5, "center_y":0.5}
+    id: layout
+    width: 100
+    pos_hint:  {"center_x": 0.5, "center_y":0.5}
+    FloatLayout:
+        id: programLayout
+        size_hint: (0.8,0.9)
+        pos_hint:  {"center_x": 0.5, "center_y":0.5}
+        Image:
+            id: logoAgh
+            source: "agh_znak_negatyw_bez_nazwy.jpg"
+            pos_hint: {"x": 0, "top": 1}
+            size_hint: (0.4, 0.2)
+
+        Label:
+            id: greetings
+            text: "Program do programowania memrystora"
+            pos_hint: {"center_x": 0.5, "top": 1}
+            size_hint: (0.2, 0.2)
+
+        Image:
+            id: LogoSamogloski
+            source: "logo-prawie-biale-tlo.png"
+            pos_hint: {"right": 1, "top":1}
+            size_hint: (0.2, 0.2)
+        Label:
+            id: FilePath
+            text:'Wybrana ścieżka'
+            multiline: False
+            size_hint: (0.5, 0.05)
+            pos_hint: {"right": 1, "center_y":0.6}
+            focus: True
+            font_name: 'Arial'
+        Button:
+            id: SetFilePath
+            text: "Wybierz folder zapisu"
+            size_hint: (0.3,0.05)
+            bold: True
+            background_color: 'white'
+            pos_hint: {"x": 0, "center_y":0.6}
+            on_press: root.open_popup()
+            #top_position: FilePath.pos_hint[0]
+            #left_position: 0.2
+            #position_hint: {"left": 0.2, "center_y":0.6}
+        Slider:
+            id: AmpOn
+            min: 0
+            max: 1.5
+            step: 0.1
+            orientation: 'horizontal'
+            pos_hint: {"x": 0, "center_y":0.4}
+            size_hint: (0.3,0.01)
+        Label:
+            id: AmpOnLabel
+            text: f"AmpOn={round(AmpOn.value,1)}"
+            pos_hint: {"x": AmpOn.x/programLayout.width, "y":AmpOn.top/programLayout.height+0.02}
+            size_hint: (0,0.0)
+
+
+
+
+
+
+
+
+<FileChoosePopup>:
+    title: "Choose a .CSV File"
+    size_hint: .9, .9
+    auto_dismiss: False
+
+    BoxLayout:
+        orientation: "vertical"
+        FileChooser:
+            id: filechooser
+            FileChooserListLayout
+
+        BoxLayout:
+            size_hint: (1, 0.1)
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            spacing: 20
+            Button:
+                text: "Cancel"
+                on_release: root.dismiss()
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path)
+                id: ldbtn
+                disabled: True if filechooser.path==[] else False
+
+
+
+        
