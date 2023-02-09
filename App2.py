@@ -42,8 +42,9 @@ class MainPanel(FloatLayout):
 
     def startMeasure(self):
         self.directory = self.ids.FilePath.text
-        self.Amp_On = round(self.ids.AmpOn.value,1)
+        self.Amp_On = round(self.ids.AmpOn.value)
         self.dt_Ron = self.ids.dtOn.value/1000
+        print(self.Amp_On)
         self.make_file()
 
     def make_file(self):
@@ -53,6 +54,7 @@ class MainPanel(FloatLayout):
         
         with open(self.file, "w") as f:
             f.write(string)
+            print("Operacja udana")
 
 
 

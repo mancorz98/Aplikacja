@@ -80,13 +80,13 @@
             size_hint: 1, 0
             height: self.texture_size[1]
         Button:
-            id: startMeasure
+            id: start
             text: "Rozpocznij pomiar"
             size_hint: (0.3,0.05)
             bold: True
             background_color: 'white'
             pos_hint: {"center_x": 0.5, "center_y":0.2}
-            on_press: root.startMeasure()
+            on_press: root.startMeasure
 
 <FileChoosePopup>:
     title: "Wybierz folder zapisu pliku"
@@ -97,6 +97,7 @@
         orientation: "vertical"
         FileChooser:
             id: filechooser
+            path: '/Users/karol/Library/CloudStorage/OneDrive-Osobisty/Dokumenty/Praca magisterska/Aplikacja'
             FileChooserListLayout
 
         BoxLayout:
