@@ -4,11 +4,12 @@
     id: layout
     width: 100
     pos_hint:  {"center_x": 0.5, "center_y":0.5}
-    size_hint: (0.9,0.9)
+    size_hint: (1,1)
 
     FloatLayout:
         id: programLayout
         pos_hint:  {"center_x": 0.5, "center_y":0.5}
+        size_hint: (.9,.9)
 
         Image:
             id: logoAgh
@@ -30,6 +31,7 @@
             source: "logo-prawie-biale-tlo.png"
             pos_hint: {"right": 1, "top":1}
             size_hint: (0.2, 0.2)
+
         Label:
             id: FilePath
             text:'Wybrana ścieżka'
@@ -59,9 +61,11 @@
             min: 0
             max: 1.5
             step: 0.1
-            orientation: 'horizontal'
-            pos_hint: {"x": 0, "center_y":0.4}
             size_hint: 0.3, None
+            pos_hint: { "center_y":0.4, 'center_x': 0.25}
+            orientation: 'horizontal'
+            #center_x: max_pulses.center_x
+            #center_y: 0.4*programLayout.height
             background_width: 32
         Label:
             id: AmpOnLabel
@@ -77,11 +81,11 @@
             max: 500
             step: 5
             orientation: 'horizontal'
-            pos_hint: {"right": 1, "center_y":0.4}
+            pos_hint: {"center_x": 0.75, "center_y":0.4}
             size_hint: 0.3, None
             background_width: 32
         Label:
-            id: dtOnLabel;
+            id: dtOnLabel
             text: f"Szerokość impulsu: {round(dtOn.value,1)} ms"
             x: dtOn.x
             y: dtOn.top
@@ -96,6 +100,38 @@
             background_color: 'white'
             pos_hint: {"center_x": 0.5, "center_y":0.2}
             on_press: root.startMeasure()
+
+        TextInput:
+            id: max_pulses
+            text:''
+            size_hint: (0.1,0.05)
+            pos_hint: {"center_x": .25, "top":(dtOn.y)/programLayout.height-0.1}
+
+        TextInput:
+            id: max_test
+            text:''
+            size_hint: (0.1,0.05)
+            pos_hint: {"center_x": .75, "top":(dtOn.y)/programLayout.height-0.1}
+            #text_size: self.width,None
+
+        Label:
+            id: mtest_label
+            text: "Wpisz maksymalną liczbę testów"
+            y: max_test.top + max_test.height/2
+            center_x: max_test.center_x
+            #text_size: self.width,None
+            size_hint: 1, 0
+            height: self.texture_size[1]
+
+
+        Label:
+            id: mpulses_label
+            text: "Wpisz maksymalną liczbę pulsów"
+            y: max_pulses.top + max_pulses.height/2
+            center_x: max_pulses.center_x
+            #text_size: self.width,None
+            size_hint: 1, 0
+            height: self.texture_size[1]
 
 <FileChoosePopup>:
     title: "Wybierz folder zapisu pliku"

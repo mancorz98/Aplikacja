@@ -8,7 +8,7 @@ from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.filechooser import FileChooser
-import kivy
+
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.popup import Popup
@@ -16,6 +16,12 @@ from kivy.properties import ObjectProperty, StringProperty
 from kivy.lang import Builder
 import os
 from KB_functions import *
+import matplotlib
+matplotlib.use("module://kivy.garden.matplotlib.backend_kivy")
+
+from kivy.garden.graph import FigureCanvasKivyAgg
+import matplotlib.pyplot as plt
+
 
 class FileChoosePopup(Popup):
     load = ObjectProperty(None)
@@ -47,9 +53,11 @@ class MainPanel(FloatLayout):
         self.Amp_On = round(self.ids.AmpOn.value,1)
         self.dt_Ron = self.ids.dtOn.value/1000.
         print(self.Amp_On)
+        #print(self.ids.pos_hint)
+        
         if os.path.isdir(self.directory):
             self.make_file()
-            print(check_state(4.8))
+            
         else:
             self.ids.FilePath.color = "red"
             self.ids.FilePath.text = "Nie wybrano ścieżki"
@@ -64,6 +72,25 @@ class MainPanel(FloatLayout):
         with open(self.file, "w") as f:
             f.write(string)
             print("Operacja udana")
+            
+    def plot(self):
+        signal = [7, 89.6, 45.-56.34]
+  
+        signal = np.array(signal)
+          
+        # this will plot the signal on graph
+        plt.plot(signal)
+          
+        # setting x label
+        plt.xlabel('Time(s)')
+          
+        # setting y label
+        plt.ylabel('signal (norm)')
+        plt.grid(True, color='lightgray')
+          
+        # adding plot to kivy boxlayout
+        self.str.layout.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+        return self.str
 
 
 
