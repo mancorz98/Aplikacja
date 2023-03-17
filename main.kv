@@ -36,7 +36,7 @@
             id: FilePath
             text:'Wybrana ścieżka'
             multiline: True
-            pos_hint: {"right": 1, "center_y":0.6}
+            pos_hint: {"center_x": 0.75, "center_y":0.6}
             focus: True
             font_name: 'Arial'
             text_size: self.width, None
@@ -51,7 +51,7 @@
             halign: 'center'
             bold: True
             background_color: 'white'
-            pos_hint: {"x": 0, "center_y":0.6}
+            pos_hint: {"center_x": 0.25, "center_y":0.6}
             on_press: root.open_popup()
             #top_position: FilePath.pos_hint[0]
             #left_position: 0.2
@@ -133,11 +133,20 @@
             size_hint: 1, 0
             height: self.texture_size[1]
 
+        Button:
+            id: plot
+            text: "Plot"
+            size_hint: (0.3,0.05)
+            bold: True
+            background_color: 'white'
+            pos_hint: {"center_x": 0.5, "center_y":0.1}
+            on_press: root.open_popup_plot()
+
+
 <FileChoosePopup>:
     title: "Wybierz folder zapisu pliku"
     size_hint: .9, .9
     auto_dismiss: False
-
     BoxLayout:
         orientation: "vertical"
         FileChooser:
@@ -158,6 +167,28 @@
                 id: ldbtn
                 disabled: True if filechooser.path==[] else False
 
+<FigurePopup>:
+    title: "Przebieg programowania "
+    size_hint: .9, .9
+    auto_dismiss: False
 
+    BoxLayout:
+        orientation: "vertical"
+        id: Plot_box
+
+        BoxLayout:
+            id: Ploting_box
+            size_hint: (1, 0.9)
+        BoxLayout:
+            size_hint: (1, 0.1)
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            spacing: 20
+            Button:
+                text: "Cancel"
+                on_release: root.dismiss()
+            Button:
+                text: "Save"
+                on_release: root.save()
+                id: ldbtn
 
         

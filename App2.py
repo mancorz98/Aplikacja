@@ -15,23 +15,69 @@ from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.lang import Builder
 import os
-from KB_functions import *
-import matplotlib
-matplotlib.use("module://kivy.garden.matplotlib.backend_kivy")
-
-from kivy.garden.graph import FigureCanvasKivyAgg
+from kivy.garden.matplotlib import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
+import _osx_support
+from kivy.clock import Clock
 
-
+import numpy as np
 class FileChoosePopup(Popup):
     load = ObjectProperty(None)
 
+class FigurePopup(Popup):
+    load = ObjectProperty(None)
+    path = ObjectProperty(None)
+    def __init__(self,**kwargs):
+        #execute the normal __init__ from the parent
+        super().__init__(**kwargs)
+        Clock.schedule_interval(self.on_start,1)
+        
+        
+    def plot(self):
+        signal = [7, 89.6, 45.-56.34]
 
+        signal = np.array(signal)
+
+        # this will plot the signal on graph
+        plt.plot(signal)
+        # setting x label
+        plt.xlabel('Time(s)')
+
+        # setting y label
+        plt.ylabel('signal (norm)')
+        plt.grid(True, color='lightgray')
+        plt.show()
+        
+    def on_start(self,*args):
+        signal = [7, 89.6, 45., -56.34]
+
+        signal = np.array(signal)
+
+        # this will plot the signal on graph
+        plt.hist(signal,color='blue')
+        # setting x label
+        plt.xlabel('Time(s)')
+
+        # setting y label
+        plt.ylabel('signal (norm)')
+        plt.grid(True, color='lightgray')
+
+        # adding plot to kivy boxlayout
+        box = self.ids.Ploting_box
+        box.clear_widgets()
+        self.figure = plt.gcf()
+        box.add_widget(FigureCanvasKivyAgg(  self.figure))
+    
+    def save(self):
+        path = os.path.join(self.path, 'signal.pdf')
+        self.figure.savefig(path)
+    
 
 
 class MainPanel(FloatLayout):
     file_path = StringProperty("No file chosen")
     the_popup = ObjectProperty(None)
+    plot_popup = ObjectProperty(None)
 
     def open_popup(self):
         self.the_popup = FileChoosePopup(load = self.load)
@@ -57,7 +103,6 @@ class MainPanel(FloatLayout):
         
         if os.path.isdir(self.directory):
             self.make_file()
-            
         else:
             self.ids.FilePath.color = "red"
             self.ids.FilePath.text = "Nie wybrano ścieżki"
@@ -72,25 +117,14 @@ class MainPanel(FloatLayout):
         with open(self.file, "w") as f:
             f.write(string)
             print("Operacja udana")
-            
-    def plot(self):
-        signal = [7, 89.6, 45.-56.34]
-  
-        signal = np.array(signal)
-          
-        # this will plot the signal on graph
-        plt.plot(signal)
-          
-        # setting x label
-        plt.xlabel('Time(s)')
-          
-        # setting y label
-        plt.ylabel('signal (norm)')
-        plt.grid(True, color='lightgray')
-          
-        # adding plot to kivy boxlayout
-        self.str.layout.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-        return self.str
+
+    def open_popup_plot(self):
+        self.plot_popup = FigurePopup(path = self.file_path)
+        self.plot_popup.open()
+        
+        
+        
+        
 
 
 
@@ -100,7 +134,6 @@ Builder.load_file('main.kv')
 class SayHello(App):
     def build(self):
         return MainPanel()
-
 
 
 if __name__ == "__main__":
