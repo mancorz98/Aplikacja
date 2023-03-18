@@ -141,6 +141,7 @@
             background_color: 'white'
             pos_hint: {"center_x": 0.5, "center_y":0.1}
             on_press: root.open_popup_plot()
+            disabled: True
 
 
 <FileChoosePopup>:
@@ -151,7 +152,6 @@
         orientation: "vertical"
         FileChooser:
             id: filechooser
-            path: '/Users/karol/Library/CloudStorage/OneDrive-Osobisty/Dokumenty/Praca magisterska/Aplikacja'
             FileChooserListLayout
 
         BoxLayout:
@@ -171,7 +171,6 @@
     title: "Przebieg programowania "
     size_hint: .9, .9
     auto_dismiss: False
-
     BoxLayout:
         orientation: "vertical"
         id: Plot_box
