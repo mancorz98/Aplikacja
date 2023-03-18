@@ -12,4 +12,4 @@ git add
 git commit
 ```
 
-Author: [Karol Bednarz](https://github.com/mancorz98).
+Author: [Karol Bednarz](https://github.com/mancorz98) :snowman:
