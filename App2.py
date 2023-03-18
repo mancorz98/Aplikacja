@@ -23,6 +23,11 @@ from kivy.clock import Clock
 import numpy as np
 class FileChoosePopup(Popup):
     load = ObjectProperty(None)
+    
+    def __init__(self,**kwargs):
+        #execute the normal __init__ from the parent
+        super().__init__(**kwargs)
+        self.ids.filechooser = os.getcwd()
 
 class FigurePopup(Popup):
     load = ObjectProperty(None)
